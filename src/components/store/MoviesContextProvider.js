@@ -13,10 +13,14 @@ const starWarsCoverImage = {
   6: 'https://lumiere-a.akamaihd.net/v1/images/Star-Wars-Return-Jedi-VI-Poster_a10501d2.jpeg?region=12%2C9%2C618%2C982&width=480',
 };
 
-const favoriteItems = ['films', 'people', 'planets', 'species', 'vehicles'];
-
 export const MoviesContextProvider = ({ children }) => {
   const [starWarsMovies, setStarWarsMovie] = useState([]);
+  const [currentMovie, setCurrentMovie] = useState(null);
+  const [favoriteFilms, setFavoriteFilms] = useState([]);
+  const [favoritePeople, setFavoritePeople] = useState([]);
+  const [favoritePlanets, setFavoritePlanets] = useState([]);
+  const [favoriteSpecies, setFavoriteSpecies] = useState([]);
+  const [favoriteVehicles, setFavoriteVehicles] = useState([]);
 
   useEffect(() => {
     getMoviesData();
@@ -47,8 +51,24 @@ export const MoviesContextProvider = ({ children }) => {
     return updatedMovies;
   };
 
-  const context = { starWarsMovies, favoriteItems };
-  const contextFunctions = useRef({ setStarWarsMovie });
+  const context = {
+    starWarsMovies,
+    currentMovie,
+    favoriteFilms,
+    favoritePeople,
+    favoritePlanets,
+    favoriteSpecies,
+    favoriteVehicles,
+  };
+  const contextFunctions = useRef({
+    setStarWarsMovie,
+    setCurrentMovie,
+    setFavoriteFilms,
+    setFavoritePeople,
+    setFavoritePlanets,
+    setFavoriteSpecies,
+    setFavoriteVehicles,
+  });
 
   return (
     <MoviesContext.Provider value={context}>

@@ -1,21 +1,9 @@
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { CircularProgress, Grid } from '@material-ui/core';
 
 import MovieCard from '../../Cards/MovieCard/MovieCard';
-import { MoviesContext } from '../../store/MoviesContextProvider';
 
-const StarWarsMovies = () => {
-  let history = useHistory();
-  const { starWarsMovies } = useContext(MoviesContext);
-
-  const onClickMovieCard = (movie) => {
-    history.push({
-      pathname: `/movie/${movie.episode_id}`,
-      state: movie,
-    });
-  };
-
+const StarWarsMovies = ({ starWarsMovies, onClick }) => {
   return (
     <Grid
       justifyContent='center'
@@ -30,7 +18,7 @@ const StarWarsMovies = () => {
     >
       {starWarsMovies.length > 0 ? (
         starWarsMovies.map((movie) => (
-          <MovieCard key={movie.episode_id} movie={movie} onClick={onClickMovieCard} />
+          <MovieCard key={movie.episode_id} movie={movie} onClick={onClick} />
         ))
       ) : (
         <CircularProgress />
