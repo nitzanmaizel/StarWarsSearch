@@ -1,38 +1,21 @@
-import React, { useContext } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React from 'react';
 
-import { MoviesContext } from '../../store/MoviesContextProvider';
-
-const SideBar = () => {
-  let history = useHistory();
-
-  const { starWarsMovies, favoriteItems } = useContext(MoviesContext);
-
-  const path = history.location.pathname;
-
-  const onClickMovieLink = (movie) => {
-    history.push({
-      pathname: `/movie/${movie.episode_id}`,
-      state: movie,
-    });
-  };
-
-  console.log(path, 'path');
+const SideBar = ({ starWarsMovies, favoriteItems, onClick, onClickLogo }) => {
   return (
     <div style={styles.container}>
-      <Link style={styles.sideBarLogo} to='/'>
+      <div style={styles.sideBarLogo} onClick={onClickLogo}>
         SWI
-      </Link>
-      {path === '/favorites' &&
+      </div>
+      {favoriteItems &&
         favoriteItems.map((title) => (
           <div style={styles.sideBarItem} key={title}>
             {title.toUpperCase()}
           </div>
         ))}
-      {path !== '/favorites' &&
+      {starWarsMovies &&
         starWarsMovies.length > 0 &&
         starWarsMovies.map((movie, index) => (
-          <div key={index} onClick={() => onClickMovieLink(movie)} style={styles.sideBarItem}>
+          <div key={index} onClick={() => onClick(movie)} style={styles.sideBarItem}>
             {movie.title}
           </div>
         ))}

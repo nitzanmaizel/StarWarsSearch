@@ -6,7 +6,7 @@ import PlanetCard from '../../Cards/PlanetCard/PlanetCard';
 import SpeciesCard from '../../Cards/SpeciesCard/SpeciesCard';
 import VehicleCard from '../../Cards/VehicleCard/VehicleCard';
 
-const DetialsInformation = ({ detials, type }) => {
+const MovieDetials = ({ detials, type }) => {
   return (
     <Grid justifyContent='space-around' container item xs={12} sm={12} md={12} lg={12}>
       {detials.length > 0 ? (
@@ -23,4 +23,4 @@ const DetialsInformation = ({ detials, type }) => {
   );
 };
 
-export default DetialsInformation;
+export default MovieDetials;

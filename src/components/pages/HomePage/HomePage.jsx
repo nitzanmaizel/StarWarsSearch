@@ -9,21 +9,21 @@ const HomePage = () => {
   const { starWarsMovies, currentMovie, isPhone } = useContext(MoviesContext);
   const { changeCurrentMovie } = useContext(MoviesContextFunctions);
 
-  useEffect(() => {
-    console.log(currentMovie, 'currentMovie');
-  }, [currentMovie]);
+  // useEffect(() => {
+  //   console.log(currentMovie, 'currentMovie');
+  // }, [currentMovie]);
 
   return (
     <Grid container>
       {!isPhone && (
         <Grid style={{ minWidth: '15%', height: '110vh' }}>
-          <SideBar />
+          <SideBar starWarsMovies={starWarsMovies} />
         </Grid>
       )}
+
       <Grid style={{ flex: 1 }}>
         <NavBar />
         <LandingPage starWarsMovies={starWarsMovies} onClick={changeCurrentMovie} />
-        <HomePage />
       </Grid>
     </Grid>
   );
