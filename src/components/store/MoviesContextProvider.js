@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
-import MovieService from '../../services/MovieService';
+// import MovieService from '../../services/MovieService';
 
 export const MoviesContext = createContext({});
 export const MoviesContextFunctions = createContext({});
@@ -8,18 +8,20 @@ export const MoviesContextProvider = ({ children }) => {
   const [starWarsMovies, setStarWarsMovie] = useState([]);
   const [currentMovie, setCurrentMovie] = useState(null);
 
-  useEffect(() => {
-    getStarWarsMovie();
-  }, []);
+  const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
-  const getStarWarsMovie = async () => {
-    const movies = await MovieService.getStarWarsMovies();
-    setStarWarsMovie(movies);
-  };
+  // useEffect(() => {
+  //   getStarWarsMovie();
+  // }, []);
 
-  const changeCurrentMovie = (movie) => {
-    setCurrentMovie(movie);
-  };
+  // const getStarWarsMovie = async () => {
+  //   const movies = await MovieService.getStarWarsMovies();
+  //   setStarWarsMovie(movies);
+  // };
+
+  // const changeCurrentMovie = (movie) => {
+  //   setCurrentMovie(movie);
+  // };
 
   // const handleMovieData = async (movie) => {
   //   try {
@@ -49,11 +51,12 @@ export const MoviesContextProvider = ({ children }) => {
   const context = {
     starWarsMovies,
     currentMovie,
+    isPhone,
   };
   const contextFunctions = useRef({
     setStarWarsMovie,
     setCurrentMovie,
-    changeCurrentMovie,
+    // changeCurrentMovie,
   });
 
   return (

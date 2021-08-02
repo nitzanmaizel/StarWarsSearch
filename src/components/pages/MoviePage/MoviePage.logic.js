@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SendFullUrlRequest } from '../../../utils/SendFullUrlRequest';
 
-const useMoviePage = (props) => {
+const useMoviePage = ({ movie }) => {
   const [movieObj, setMovieObject] = useState(null);
   const [movieChercters, setMovieChercters] = useState([]);
   const [movieSpecies, setMovieSpecies] = useState([]);
@@ -9,10 +9,8 @@ const useMoviePage = (props) => {
   const [movieVehicles, setMovieVehicles] = useState([]);
 
   useEffect(() => {
-    if (props && props.location) {
-      setMovieObject(props.location.state);
-    }
-  }, [props]);
+    setMovieObject(movie);
+  }, [movie]);
 
   useEffect(() => {
     if (movieObj) {

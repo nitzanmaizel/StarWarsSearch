@@ -5,15 +5,14 @@ import SideBar from '../../Misc/SideBar/SideBar';
 import LandingPage from '../LandingPage/LandingPage';
 import { MoviesContext, MoviesContextFunctions } from '../../store/MoviesContextProvider';
 
-const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
-
 const HomePage = () => {
-  const { starWarsMovies, currentMovie } = useContext(MoviesContext);
+  const { starWarsMovies, currentMovie, isPhone } = useContext(MoviesContext);
   const { changeCurrentMovie } = useContext(MoviesContextFunctions);
 
   useEffect(() => {
     console.log(currentMovie, 'currentMovie');
   }, [currentMovie]);
+
   return (
     <Grid container>
       {!isPhone && (
@@ -24,6 +23,7 @@ const HomePage = () => {
       <Grid style={{ flex: 1 }}>
         <NavBar />
         <LandingPage starWarsMovies={starWarsMovies} onClick={changeCurrentMovie} />
+        <HomePage />
       </Grid>
     </Grid>
   );
