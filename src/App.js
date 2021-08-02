@@ -1,17 +1,18 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
-import HomePage from './components/pages/HomePage';
+import FavouritesPage from './components/pages/FavouritesPage/FavouritesPage';
+import HomePage from './components/pages/HomePage/HomePage';
+import MoviePage from './components/pages/MoviePage/MoviePage';
 
 const App = () => {
   return (
-    <Container>
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-      </Switch>
-    </Container>
+    <Switch>
+      <Route exact path='/' component={HomePage} />
+      <Route exact path='/movie/:movieId' component={MoviePage} />
+      <Route exact path='/favorites' component={FavouritesPage} />
+    </Switch>
   );
 };
 

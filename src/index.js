@@ -4,11 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { MoviesContextProvider } from './components/store/MoviesContextProvider';
 
-console.log('component');
 ReactDOM.render(
   <BrowserRouter forceRefresh={true}>
-    <App />
+    <MoviesContextProvider>
+      <App />
+    </MoviesContextProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );
