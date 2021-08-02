@@ -1,16 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import NavBar from '../../Misc/NavBar/NavBar';
 import SideBar from '../../Misc/SideBar/SideBar';
 import LandingPage from '../LandingPage/LandingPage';
+import { MoviesContext, MoviesContextFunctions } from '../../store/MoviesContextProvider';
 
 const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
 const HomePage = () => {
-  const [currentMovie, setCurrentMovie] = useState(null);
+  const { starWarsMovies, currentMovie } = useContext(MoviesContext);
+  const { changeCurrentMovie } = useContext(MoviesContextFunctions);
 
-  useEffect(() => {}, [currentMovie]);
-
+  useEffect(() => {
+    console.log(currentMovie, 'currentMovie');
+  }, [currentMovie]);
   return (
     <Grid container>
       {!isPhone && (
@@ -20,7 +23,7 @@ const HomePage = () => {
       )}
       <Grid style={{ flex: 1 }}>
         <NavBar />
-        <LandingPage />
+        <LandingPage starWarsMovies={starWarsMovies} onClick={changeCurrentMovie} />
       </Grid>
     </Grid>
   );

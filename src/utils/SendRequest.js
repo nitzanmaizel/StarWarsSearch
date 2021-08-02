@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const BASEURL = 'https://swapi.dev/api/';
-
 const sendRequest = async (
   url = '',
   data = {},
@@ -9,7 +7,7 @@ const sendRequest = async (
 ) => {
   const config = {
     method: 'GET',
-    url: BASEURL + url,
+    url: url,
     data: data,
     headers: headers,
   };

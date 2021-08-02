@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MoviesContextProvider } from './components/store/MoviesContextProvider';
 
 ReactDOM.render(
-  <BrowserRouter forceRefresh={true}>
+  <BrowserRouter>
     <MoviesContextProvider>
       <App />
     </MoviesContextProvider>
