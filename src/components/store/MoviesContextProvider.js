@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
+import MovieService from '../../services/MovieService';
 import { sendRequest } from '../../utils/SendRequest';
 
 export const MoviesContext = createContext({});
@@ -32,6 +33,7 @@ export const MoviesContextProvider = ({ children }) => {
       if (res && res.data) {
         const moviesWithImg = addImageUrl(res.data.results);
         setStarWarsMovie(moviesWithImg);
+        MovieService.addStarWrasMoviesToLocalSorge(moviesWithImg);
       }
     } catch (error) {
       console.log(error, 'error');
@@ -45,11 +47,37 @@ export const MoviesContextProvider = ({ children }) => {
       let movieWithImage = {
         ...movie,
         img: img,
+        id: movie.episode_id,
       };
       updatedMovies.push(movieWithImage);
     });
     return updatedMovies;
   };
+
+  // const handleMovieData = async (movie) => {
+  //   try {
+  //     const chercters = await updateRelevantArray(movie.characters);
+  //     const planents = await updateRelevantArray(movie.planets);
+  //     const species = await updateRelevantArray(movie.species);
+  //     const vehicles = await updateRelevantArray(movie.vehicles);
+
+  //     if (chercters) setMovieChercters(chercters);
+  //     if (planents) setMoviePlanets(planents);
+  //     if (species) setMovieSpecies(species);
+  //     if (vehicles) setMovieVehicles(vehicles);
+  //   } catch (error) {
+  //     console.error(['MoviePage.js'], error);
+  //   }
+  // };
+
+  // const updateRelevantArray = async (movieArray) => {
+  //   let updetedArray = [];
+  //   for (const url of movieArray) {
+  //     let itemObj = await SendFullUrlRequest(url);
+  //     updetedArray.push(itemObj.data);
+  //   }
+  //   return updetedArray;
+  // };
 
   const context = {
     starWarsMovies,
