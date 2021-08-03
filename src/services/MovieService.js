@@ -12,6 +12,7 @@ const starWarsCoverImage = {
 const BASEURL = 'https://swapi.dev/api/';
 
 const addStarWrasMoviesToLocalSorge = (starWarsMovies) => {
+  console.log(starWarsMovies, 'starWarsMovies');
   localStorage.setItem('starWarsMovies', JSON.stringify(starWarsMovies));
 };
 
@@ -42,12 +43,25 @@ const addImageUrl = (movies) => {
       ...movie,
       img: img,
       id: movie.episode_id,
+      isFavourit: false,
+      isNeedMoreData: true,
     };
     updatedMovies.push(movieWithImage);
   });
   return updatedMovies;
 };
 
+const updateMovieData = (updatedMovie) => {
+  let starWarsMovies = JSON.parse(localStorage.getItem('starWarsMovies'));
+  if (starWarsMovies) {
+    let movieIndex = starWarsMovies.findIndex((movie) => movie.id === updatedMovie.id);
+    starWarsMovies[movieIndex] = updatedMovie;
+    localStorage.setItem('starWarsMovies', JSON.stringify(starWarsMovies));
+    return starWarsMovies;
+  }
+};
+
 export default {
   getStarWarsMovies,
+  updateMovieData,
 };

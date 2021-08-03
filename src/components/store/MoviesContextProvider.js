@@ -17,9 +17,12 @@ export const MoviesContextProvider = ({ children }) => {
     const movies = await MovieService.getStarWarsMovies();
     setStarWarsMovie(movies);
   };
-  console.log('check');
   const changeCurrentMovie = (movie) => {
     setCurrentMovie(movie);
+  };
+
+  const removeCurrentMovie = () => {
+    setCurrentMovie(null);
   };
 
   // const handleMovieData = async (movie) => {
@@ -56,6 +59,7 @@ export const MoviesContextProvider = ({ children }) => {
     setStarWarsMovie,
     setCurrentMovie,
     changeCurrentMovie,
+    removeCurrentMovie,
   });
 
   return (

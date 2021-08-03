@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
-import { SendFullUrlRequest } from '../../../utils/SendFullUrlRequest';
+import { useEffect, useState, useContext } from 'react';
+import MovieService from '../../../services/MovieService';
+import { sendRequest } from '../../../utils/SendRequest';
+import { MoviesContextFunctions } from '../../store/MoviesContextProvider';
 
 const useMoviePage = ({ movie }) => {
+  const { setStarWarsMovie } = useContext(MoviesContextFunctions);
   const [movieObj, setMovieObject] = useState(null);
   const [movieChercters, setMovieChercters] = useState([]);
   const [movieSpecies, setMovieSpecies] = useState([]);
@@ -9,22 +12,39 @@ const useMoviePage = ({ movie }) => {
   const [movieVehicles, setMovieVehicles] = useState([]);
 
   useEffect(() => {
+    let isSubscribed = true;
     setMovieObject(movie);
-  }, [movie]);
-
-  useEffect(() => {
-    if (movieObj) {
+    if (movieObj && isSubscribed) {
       handleMovieData(movieObj);
     }
-  }, [movieObj]);
+    return () => (isSubscribed = false);
+  }, [movie, movieObj]);
 
   const handleMovieData = async (movie) => {
     try {
-      const chercters = await updateRelevantArray(movie.characters);
-      const planents = await updateRelevantArray(movie.planets);
-      const species = await updateRelevantArray(movie.species);
-      const vehicles = await updateRelevantArray(movie.vehicles);
+      let chercters, planents, species, vehicles;
 
+      if (movie.isNeedMoreData) {
+        chercters = await updateRelevantArray(movie.characters);
+        planents = await updateRelevantArray(movie.planets);
+        species = await updateRelevantArray(movie.species);
+        vehicles = await updateRelevantArray(movie.vehicles);
+        let updatedMovie = {
+          ...movie,
+          isNeedMoreData: false,
+          chercters: chercters,
+          planents: planents,
+          species: species,
+          vehicles: vehicles,
+        };
+        const updateMovies = MovieService.updateMovieData(updatedMovie);
+        setStarWarsMovie(updateMovies);
+      } else {
+        chercters = movie.characters;
+        planents = movie.planets;
+        species = movie.species;
+        vehicles = movie.vehicles;
+      }
       if (chercters) setMovieChercters(chercters);
       if (planents) setMoviePlanets(planents);
       if (species) setMovieSpecies(species);
@@ -37,7 +57,7 @@ const useMoviePage = ({ movie }) => {
   const updateRelevantArray = async (movieArray) => {
     let updetedArray = [];
     for (const url of movieArray) {
-      let itemObj = await SendFullUrlRequest(url);
+      let itemObj = await sendRequest(url);
       updetedArray.push(itemObj.data);
     }
     return updetedArray;

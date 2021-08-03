@@ -1,4 +1,5 @@
 import React from 'react';
+import HeartIcon from '../../icons/HeartIcon';
 
 const MovieCard = ({ movie, onClick }) => {
   return (
@@ -14,6 +15,9 @@ const MovieCard = ({ movie, onClick }) => {
     >
       <img src={movie.img} style={{ height: 300 }} />
       <div>{movie.title}</div>
+      <div>
+        <HeartIcon fill='black' isSelected={movie.isFavourit} />
+      </div>
     </div>
   );
 };

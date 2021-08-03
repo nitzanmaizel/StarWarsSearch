@@ -27,10 +27,11 @@ export default SideBar;
 
 const styles = {
   container: {
-    minHeight: '100%',
+    height: '100%',
     backgroundColor: '#303030',
     minWidth: '15%',
     padding: 5,
+    overflow: 'hidden',
   },
   sideBarItem: {
     padding: 5,
