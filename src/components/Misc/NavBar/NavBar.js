@@ -6,10 +6,10 @@ import DrawerBar from './DrawerBar';
 
 const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
-const NavBar = ({ onClick, onClickLogo }) => {
+const NavBar = ({ onClick, onClickLogo, withLogo }) => {
   return (
     <AppBar position='static' style={styles.appBarContainer}>
-      <Toolbar style={styles.toolBar}>
+      <Toolbar style={isPhone || withLogo ? styles.toolBarWithLogo : styles.toolBar}>
         {isPhone && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ marginTop: 5 }}>
@@ -18,6 +18,11 @@ const NavBar = ({ onClick, onClickLogo }) => {
             <div style={styles.logo} onClick={onClickLogo}>
               SWI
             </div>
+          </div>
+        )}
+        {withLogo && (
+          <div style={styles.logo} onClick={onClickLogo}>
+            SWI - Home
           </div>
         )}
         <Link style={styles.favorite} to='/favorites'>
@@ -36,7 +41,10 @@ const styles = {
     minHeight: 60,
   },
   toolBar: {
-    justifyContent: isPhone ? 'space-between' : 'flex-end',
+    justifyContent: 'flex-end',
+  },
+  toolBarWithLogo: {
+    justifyContent: 'space-between',
   },
   drawerWrapper: {},
   logo: {

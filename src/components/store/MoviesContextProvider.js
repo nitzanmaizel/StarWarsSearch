@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
 import MovieService from '../../services/MovieService';
+import { sendRequest } from '../../utils/SendRequest';
 
 export const MoviesContext = createContext({});
 export const MoviesContextFunctions = createContext({});
@@ -8,18 +9,12 @@ export const MoviesContextProvider = ({ children }) => {
   const [starWarsMovies, setStarWarsMovie] = useState([]);
   const [currentMovie, setCurrentMovie] = useState(null);
   const [currentFavourite, setCurrentFavourite] = useState([]);
-  const [favouriteTitle, setFavouriteTitle] = useState('');
-  const [favouriteFilms, setFavouriteFilms] = useState([]);
-  const [favouritePeople, setFavouritePeople] = useState([]);
-  const [favouritePlanets, setFavouritPlanets] = useState([]);
-  const [favouriteSpeciess, setFavouriteSpeciess] = useState([]);
-  const [favouriteVehicles, setFavouriteVehicles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
   useEffect(() => {
     getStarWarsMovie();
-    getFavourites();
   }, []);
 
   const getStarWarsMovie = async () => {
@@ -27,30 +22,37 @@ export const MoviesContextProvider = ({ children }) => {
     setStarWarsMovie(movies);
   };
 
-  const changeCurrentMovie = (movie) => {
-    setCurrentMovie(movie);
+  const changeCurrentMovie = async (movie) => {
+    setLoading(true);
+    let chercters, planents, species, vehicles;
+
+    if (movie.isNeedMoreData) {
+      chercters = await updateRelevantArray(movie.characters);
+      planents = await updateRelevantArray(movie.planets);
+      species = await updateRelevantArray(movie.species);
+      vehicles = await updateRelevantArray(movie.vehicles);
+      let updatedMovieWithAllData = {
+        ...movie,
+        isNeedMoreData: false,
+        chercters: chercters,
+        planents: planents,
+        species: species,
+        vehicles: vehicles,
+      };
+      const updatedMovies = MovieService.updateMovieData(updatedMovieWithAllData);
+      setStarWarsMovie(updatedMovies);
+      setCurrentMovie(updatedMovieWithAllData);
+    } else {
+      setCurrentMovie(movie);
+    }
+    setLoading(false);
   };
 
   const removeCurrentMovie = () => {
     setCurrentMovie(null);
   };
 
-  const getFavourites = () => {
-    let films, chercters, planents, species, vehicles;
-    films = MovieService.getFavouritesItems('films');
-    chercters = MovieService.getFavouritesItems('people');
-    planents = MovieService.getFavouritesItems('planets');
-    species = MovieService.getFavouritesItems('species');
-    vehicles = MovieService.getFavouritesItems('vehicles');
-    if (films) setFavouriteFilms(films);
-    if (chercters) setFavouritePeople(chercters);
-    if (planents) setFavouritPlanets(planents);
-    if (species) setFavouriteSpeciess(species);
-    if (vehicles) setFavouriteVehicles(vehicles);
-  };
-
   const handleLikeMovie = async (movie) => {
-    console.log(movie, 'movie');
     const starWarsMovies = await MovieService.getStarWarsMovies();
     let updatedMovie = movie;
     const index = starWarsMovies.findIndex((startWarsMovie) => startWarsMovie.id === movie.id);
@@ -65,31 +67,22 @@ export const MoviesContextProvider = ({ children }) => {
     MovieService.updateMovieData(movie);
   };
 
-  const handleLikeItem = (item, type) => {
-    console.log(item, type);
-  };
-
-  const changeCurrentFavourites = (type) => {
-    setFavouriteTitle(type);
-    let favourites = MovieService.getFavouritesItems(type);
-    if (type === 'films') setCurrentFavourite(favourites);
-    else if (type === 'people') setCurrentFavourite(favourites);
-    else if (type === 'planets') setCurrentFavourite(favourites);
-    else if (type === 'species') setCurrentFavourite(favourites);
-    else if (type === 'vehicles') setCurrentFavourite(favourites);
+  const updateRelevantArray = async (movieArray) => {
+    let updetedArray = [];
+    for (const url of movieArray) {
+      let itemObj = await sendRequest(url);
+      itemObj.isFavourit = false;
+      updetedArray.push(itemObj.data);
+    }
+    return updetedArray;
   };
 
   const context = {
     starWarsMovies,
     currentMovie,
     currentFavourite,
-    favouriteTitle,
-    favouriteFilms,
-    favouritePeople,
-    favouritePlanets,
-    favouriteSpeciess,
-    favouriteVehicles,
     isPhone,
+    loading,
   };
 
   const contextFunctions = useRef({
@@ -99,8 +92,6 @@ export const MoviesContextProvider = ({ children }) => {
     changeCurrentMovie,
     removeCurrentMovie,
     handleLikeMovie,
-    handleLikeItem,
-    changeCurrentFavourites,
   });
 
   return (

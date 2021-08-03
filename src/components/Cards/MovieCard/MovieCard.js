@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import HeartIcon from '../../icons/HeartIcon';
 import { MoviesContextFunctions } from '../../store/MoviesContextProvider';
 
-const MovieCard = ({ movie, onClick }) => {
+const MovieCard = ({ movie, onClick, showIcon = true }) => {
   const { handleLikeMovie } = useContext(MoviesContextFunctions);
   return (
     <div style={styles.container}>
@@ -10,9 +10,11 @@ const MovieCard = ({ movie, onClick }) => {
         <img src={movie.img} style={{ height: 300 }} />
         <div>{movie.title}</div>
       </div>
-      <div onClick={() => handleLikeMovie(movie)}>
-        <HeartIcon fill='black' isSelected={movie.isFavourit} />
-      </div>
+      {showIcon && (
+        <div onClick={() => handleLikeMovie(movie)}>
+          <HeartIcon fill='black' isSelected={movie.isFavourit} />
+        </div>
+      )}
     </div>
   );
 };

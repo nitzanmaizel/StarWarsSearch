@@ -30,7 +30,7 @@ const getStarWarsMoviesFromAPI = async () => {
       return moviesWithImg;
     }
   } catch (error) {
-    console.log(error, 'error');
+    console.error(error, '[MovieService.js]');
   }
 };
 
@@ -76,7 +76,6 @@ const addItemToFavourites = (item, type) => {
 };
 
 const removeItemFromFavourites = (item, type) => {
-  console.log(item, 'item');
   let favouriteItems = JSON.parse(localStorage.getItem(`favourite-${type}`));
   if (favouriteItems) {
     let favouriteIndex = favouriteItems.findIndex((favourite) => favourite.id === item.id);
