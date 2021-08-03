@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeartIcon = ({ fill, isSelected }) => {
+const HeartIcon = ({ fill = 'black', isSelected }) => {
   return (
     <svg
       width='18'

@@ -63,8 +63,34 @@ const updateMovieData = (updatedMovie) => {
 const addItemToFavourites = (item, type) => {
   let favouriteItems = JSON.parse(localStorage.getItem(`favourite-${type}`));
   if (favouriteItems) {
+    if (favouriteItems.length > 0) {
+      favouriteItems.forEach((favourite) => {
+        if (favourite.id !== item.id) {
+          localStorage.setItem(`favourite-${type}`, JSON.stringify([...favouriteItems, item]));
+        }
+      });
+    } else localStorage.setItem(`favourite-${type}`, JSON.stringify([item]));
   } else {
     localStorage.setItem(`favourite-${type}`, JSON.stringify([item]));
+  }
+};
+
+const removeItemFromFavourites = (item, type) => {
+  console.log(item, 'item');
+  let favouriteItems = JSON.parse(localStorage.getItem(`favourite-${type}`));
+  if (favouriteItems) {
+    let favouriteIndex = favouriteItems.findIndex((favourite) => favourite.id === item.id);
+    favouriteItems.splice(favouriteIndex, 1);
+    localStorage.setItem(`favourite-${type}`, JSON.stringify(favouriteItems));
+  }
+};
+
+const getFavouritesItems = (type) => {
+  let favouriteItems = JSON.parse(localStorage.getItem(`favourite-${type}`));
+  if (favouriteItems) return favouriteItems;
+  else {
+    localStorage.setItem(`favourite-${type}`, JSON.stringify([]));
+    return [];
   }
 };
 
@@ -72,4 +98,6 @@ export default {
   getStarWarsMovies,
   updateMovieData,
   addItemToFavourites,
+  getFavouritesItems,
+  removeItemFromFavourites,
 };

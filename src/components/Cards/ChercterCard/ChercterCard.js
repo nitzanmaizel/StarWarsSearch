@@ -1,6 +1,7 @@
 import React from 'react';
+import HeartIcon from '../../icons/HeartIcon';
 
-const ChercterCard = ({ chercter }) => {
+const ChercterCard = ({ chercter, onClick }) => {
   return (
     <div style={styles.container}>
       <div>
@@ -26,6 +27,9 @@ const ChercterCard = ({ chercter }) => {
       <div>
         <span style={styles.chercterLabel}>Hair Color: </span>
         {chercter.hair_color}
+      </div>
+      <div onClick={onClick} style={{ textAlign: 'center' }}>
+        <HeartIcon isSelected={chercter.isFavourit} />
       </div>
     </div>
   );

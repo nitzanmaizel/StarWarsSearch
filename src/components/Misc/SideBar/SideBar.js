@@ -8,7 +8,7 @@ const SideBar = ({ starWarsMovies, favoriteItems, onClick, onClickLogo }) => {
       </div>
       {favoriteItems &&
         favoriteItems.map((title) => (
-          <div style={styles.sideBarItem} key={title}>
+          <div style={styles.sideBarItem} key={title} onClick={() => onClick(title)}>
             {title.toUpperCase()}
           </div>
         ))}

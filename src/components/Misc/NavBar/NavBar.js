@@ -11,18 +11,18 @@ const NavBar = ({ onClick, onClickLogo }) => {
     <AppBar position='static' style={styles.appBarContainer}>
       <Toolbar style={styles.toolBar}>
         {isPhone && (
-          <div style={{ display: 'flex' }}>
-            <DrawerBar onClick={onClick} />
-            <div>
-              <Link style={styles.logo} to='/'>
-                SWI
-              </Link>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ marginTop: 5 }}>
+              <DrawerBar onClick={onClick} />
+            </div>
+            <div style={styles.logo} onClick={onClickLogo}>
+              SWI
             </div>
           </div>
         )}
-        <div style={styles.favorite} onClick={onClickLogo}>
+        <Link style={styles.favorite} to='/favorites'>
           Favorites
-        </div>
+        </Link>
       </Toolbar>
     </AppBar>
   );
@@ -38,6 +38,7 @@ const styles = {
   toolBar: {
     justifyContent: isPhone ? 'space-between' : 'flex-end',
   },
+  drawerWrapper: {},
   logo: {
     marginLeft: 10,
     textDecoration: 'none',
