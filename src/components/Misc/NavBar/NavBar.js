@@ -6,14 +6,14 @@ import DrawerBar from './DrawerBar';
 
 const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
-const NavBar = ({ onClick, onClickLogo, withLogo }) => {
+const NavBar = ({ onClick, onClickLogo, withLogo, starWarsMovies }) => {
   return (
     <AppBar position='static' style={styles.appBarContainer}>
       <Toolbar style={isPhone || withLogo ? styles.toolBarWithLogo : styles.toolBar}>
-        {isPhone && (
+        {isPhone && !withLogo && (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div style={{ marginTop: 5 }}>
-              <DrawerBar onClick={onClick} />
+              <DrawerBar starWarsMovies={starWarsMovies} onClick={onClick} />
             </div>
             <div style={styles.logo} onClick={onClickLogo}>
               SWI

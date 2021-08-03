@@ -23,6 +23,7 @@ const FavouritesPage = () => {
   const getFavourites = (moviesArray) => {
     setLoading(true);
     let favourites = [];
+    console.log(moviesArray, 'moviesArray');
     moviesArray.forEach((movie) => {
       if (movie.isFavourit) {
         favourites.push(movie);
@@ -36,31 +37,29 @@ const FavouritesPage = () => {
     <Grid container>
       <Grid style={{ flex: 1 }}>
         <NavBar withLogo onClickLogo={goToHomePage} />
-        {loading ? (
-          <div style={{ textAlign: 'center', marginTop: 20 }}>
-            <CircularProgress />
-          </div>
-        ) : favouritesMovies.length > 0 ? (
-          favouritesMovies.map((movie) => (
-            <Grid
-              justifyContent='center'
-              container
-              item
-              spacing={2}
-              xs={12}
-              sm={12}
-              md={12}
-              lg={12}
-              style={{ flexGrow: 1, margin: 'auto', textAlign: 'center' }}
-            >
-              <MovieCard showIcon={false} movie={movie} />
-            </Grid>
-          ))
-        ) : (
-          <div style={{ textAlign: 'center', fontSize: 25, color: '#FFE300', marginTop: 20 }}>
-            No Favourites
-          </div>
-        )}
+        <Grid
+          justifyContent='center'
+          container
+          item
+          spacing={2}
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          style={{ flexGrow: 1, margin: 'auto', textAlign: 'center' }}
+        >
+          {loading ? (
+            <div style={{ textAlign: 'center', marginTop: 20 }}>
+              <CircularProgress />
+            </div>
+          ) : favouritesMovies.length > 0 ? (
+            favouritesMovies.map((movie) => <MovieCard showIcon={false} movie={movie} />)
+          ) : (
+            <div style={{ textAlign: 'center', fontSize: 25, color: '#FFE300', marginTop: 20 }}>
+              No Favourites
+            </div>
+          )}
+        </Grid>
       </Grid>
     </Grid>
   );

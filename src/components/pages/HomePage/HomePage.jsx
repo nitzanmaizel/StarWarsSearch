@@ -23,7 +23,11 @@ const HomePage = () => {
       )}
 
       <Grid style={{ flex: 1 }}>
-        <NavBar onClickLogo={removeCurrentMovie} onClick={changeCurrentMovie} />
+        <NavBar
+          onClickLogo={removeCurrentMovie}
+          onClick={changeCurrentMovie}
+          starWarsMovies={starWarsMovies}
+        />
         {currentMovie ? (
           <MoviePage movie={currentMovie} />
         ) : (
