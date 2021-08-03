@@ -23,7 +23,6 @@ const FavouritesPage = () => {
   const getFavourites = (moviesArray) => {
     setLoading(true);
     let favourites = [];
-    console.log(moviesArray, 'moviesArray');
     moviesArray.forEach((movie) => {
       if (movie.isFavourit) {
         favourites.push(movie);
