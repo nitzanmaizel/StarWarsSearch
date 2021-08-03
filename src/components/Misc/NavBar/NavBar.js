@@ -6,13 +6,13 @@ import DrawerBar from './DrawerBar';
 
 const isPhone = window.innerWidth < 800 && window.innerWidth > 0;
 
-const NavBar = () => {
+const NavBar = ({ onClick, onClickLogo }) => {
   return (
     <AppBar position='static' style={styles.appBarContainer}>
       <Toolbar style={styles.toolBar}>
         {isPhone && (
           <div style={{ display: 'flex' }}>
-            <DrawerBar />
+            <DrawerBar onClick={onClick} />
             <div>
               <Link style={styles.logo} to='/'>
                 SWI
@@ -20,9 +20,9 @@ const NavBar = () => {
             </div>
           </div>
         )}
-        <Link style={styles.favorite} to='/favorites'>
+        <div style={styles.favorite} onClick={onClickLogo}>
           Favorites
-        </Link>
+        </div>
       </Toolbar>
     </AppBar>
   );

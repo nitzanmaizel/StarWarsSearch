@@ -14,12 +14,16 @@ const HomePage = () => {
     <Grid container>
       {!isPhone && (
         <Grid style={{ minWidth: '15%', height: '110vh' }}>
-          <SideBar starWarsMovies={starWarsMovies} onClickLogo={removeCurrentMovie} />
+          <SideBar
+            starWarsMovies={starWarsMovies}
+            onClickLogo={removeCurrentMovie}
+            onClick={changeCurrentMovie}
+          />
         </Grid>
       )}
 
       <Grid style={{ flex: 1 }}>
-        <NavBar />
+        <NavBar onClickLogo={removeCurrentMovie} onClick={changeCurrentMovie} />
         {currentMovie ? (
           <MoviePage movie={currentMovie} />
         ) : (

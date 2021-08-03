@@ -58,6 +58,7 @@ const useMoviePage = ({ movie }) => {
     let updetedArray = [];
     for (const url of movieArray) {
       let itemObj = await sendRequest(url);
+      itemObj.isFavourit = false;
       updetedArray.push(itemObj.data);
     }
     return updetedArray;

@@ -12,7 +12,6 @@ const starWarsCoverImage = {
 const BASEURL = 'https://swapi.dev/api/';
 
 const addStarWrasMoviesToLocalSorge = (starWarsMovies) => {
-  console.log(starWarsMovies, 'starWarsMovies');
   localStorage.setItem('starWarsMovies', JSON.stringify(starWarsMovies));
 };
 
@@ -61,7 +60,16 @@ const updateMovieData = (updatedMovie) => {
   }
 };
 
+const addItemToFavourites = (item, type) => {
+  let favouriteItems = JSON.parse(localStorage.getItem(`favourite-${type}`));
+  if (favouriteItems) {
+  } else {
+    localStorage.setItem(`favourite-${type}`, JSON.stringify([item]));
+  }
+};
+
 export default {
   getStarWarsMovies,
   updateMovieData,
+  addItemToFavourites,
 };
