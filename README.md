@@ -2,8 +2,8 @@
 
 installation process
 
-1. clone repo
+1. clone repo - git clone https://github.com/nitzanmaizel/StarWarsSearch.git
 
-2. run in the trminal npm install in the root directory
+2. run in the root directory - npm install
 
-3. run in the trminal npm start
+3. run npm start
